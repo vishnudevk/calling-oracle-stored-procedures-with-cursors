@@ -19,7 +19,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,12 +27,12 @@ import org.springframework.stereotype.Component;
 @Component
 class CallingViaJPA {
 
-	@Autowired
-	private EntityManager em;
+	private final EntityManager em;
 
-	CallingViaJPA() {
+	CallingViaJPA(EntityManager em) {
+		this.em = em;
 	}
-	
+
 	void execute() {
 		//callString();
 		callOne();
@@ -52,6 +51,9 @@ class CallingViaJPA {
 			//in case of hibernate use this call
 			System.out.println(callString.getResultList());
 		}
+
+
+		
 	}
 
 	private void callString() {
