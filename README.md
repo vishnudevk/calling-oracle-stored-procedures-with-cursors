@@ -1,4 +1,4 @@
-# Calling Oracle Stored Procedures with Cursors
+# Calling Oracle Stored Procedures with Cursors - Eclipselink
 
 Calling stored procedures is a major PITA, especially when they return cursors. This repositories demonstrates how one can do it.
 
