@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,12 +28,12 @@ import org.springframework.stereotype.Component;
 @Component
 class CallingViaJPA {
 
-	private final EntityManager em;
+	@Autowired
+	private EntityManager em;
 
-	CallingViaJPA(EntityManager em) {
-		this.em = em;
+	CallingViaJPA() {
 	}
-
+	
 	void execute() {
 		//callString();
 		callOne();
@@ -44,16 +45,14 @@ class CallingViaJPA {
 
 		callString.execute();
 
-		if(callString.hasMoreResults()){
-			//calling orignal method incase of eclispse link (Any other jpa)
-			System.out.println(callString.getOutputParameterValue(1));
-		}else{
-			//in case of hibernate use this call
-			System.out.println(callString.getResultList());
-		}
-
-
+		// incorrectly produces false
+		System.out.println("has more results: " + callString.hasMoreResults());
 		
+		callString.isBound(callString.getParameter(1));
+		// works
+//		System.out.println(callString.getResultList());
+		// doesn't work
+		System.out.println(callString.getOutputParameterValue(1));
 	}
 
 	private void callString() {
